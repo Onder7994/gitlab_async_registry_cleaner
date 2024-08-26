@@ -1,0 +1,70 @@
+[tool.poetry]
+name = "gitlab_registry_async_cleaner"
+version = "1.0.4"
+description = "Gitlab registry async cleaner"
+authors = ["Andrey Trusikhin <a.trusikhin@yandex.ru>"]
+license = "MIT"
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+[tool.poetry.urls]
+"Homepage" = "https://github.com/Onder7994/gitlab_async_registry_cleaner"
+"Repository" = "https://github.com/Onder7994/gitlab_async_registry_cleaner"
+"Documentation" = "https://github.com/Onder7994/gitlab_async_registry_cleaner#readme"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+httpx = "^0.27.0"
+asyncio = "^3.4.3"
+python-dotenv = "^1.0.1"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+gitlab_async_cleaner = "gitlab_registry_async_cleaner.main:main"
+
+[tool.ruff]
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "venv",
+]
+line-length = 100
+indent-width = 4
+
+[tool.ruff.lint]
+select = ["E", "W", "C", "F", "N", "D"]
+ignore = []
+
+# Allow fix for all enabled rules (when `--fix`) is provided.
+fixable = ["ALL"]
+unfixable = []
