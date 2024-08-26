@@ -1,0 +1,23 @@
+{
+  "repo_1":
+  {
+    "id": 1,
+    "delete_older_than": {
+      "days": 2
+    }
+  },
+  "repo_2":
+  {
+    "id": 2,
+    "delete_older_than": {
+      "hours": 5
+    }
+  },
+  "repo_3":
+  {
+    "id": 3,
+    "delete_older_than": {
+      "minutes": 60
+    }
+  }
+}
