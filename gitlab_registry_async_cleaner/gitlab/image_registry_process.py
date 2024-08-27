@@ -1,5 +1,5 @@
 """Gitlab module."""
-
+import asyncio
 from datetime import timedelta, datetime, timezone
 from typing import Dict, Any
 
@@ -75,6 +75,7 @@ async def process_tags(
     delete_older_than: timedelta,
 ) -> None:
     """Processing tags in repositories."""
+    tasks = []
     url = get_tags_url(
         gitlab_url=config.gitlab_url,
         project_id=registry_project_id,
@@ -101,15 +102,18 @@ async def process_tags(
                 repository_tags = response.json()
                 for _, item in enumerate(repository_tags):
                     tag_name = item["name"]
-                    await process_single_tag_and_delete(
-                        registry_project_id=registry_project_id,
-                        repository_id=repository_id,
-                        tag_name=tag_name,
-                        headers=headers,
-                        config=config,
-                        delete_older_than=delete_older_than,
+                    tasks.append(
+                        process_single_tag_and_delete(
+                            registry_project_id=registry_project_id,
+                            repository_id=repository_id,
+                            tag_name=tag_name,
+                            headers=headers,
+                            config=config,
+                            delete_older_than=delete_older_than,
+                        )
                     )
                 current_page_number += 1
+            await asyncio.gather(*tasks)
         else:
             logger.error(
                 "Failed request to %s with status: %s and message: %s",
