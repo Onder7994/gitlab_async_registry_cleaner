@@ -113,7 +113,10 @@ async def process_tags(
                         )
                     )
                 current_page_number += 1
-            await asyncio.gather(*tasks)
+            results = await asyncio.gather(*tasks, return_exceptions=True)
+            for result in results:
+                if isinstance(result, Exception):
+                    logger.error("Error occurred during tag processing: %s", result)
         else:
             logger.error(
                 "Failed request to %s with status: %s and message: %s",

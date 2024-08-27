@@ -46,7 +46,11 @@ async def create_async_tasks(
                 config=config,
             )
         )
-    await asyncio.gather(*tasks)
+    results = await asyncio.gather(*tasks, return_exceptions=True)
+    for result in results:
+        if isinstance(result, Exception):
+            logger.error("Error in process_project task: %s", result)
+
 
 
 async def process_project(
